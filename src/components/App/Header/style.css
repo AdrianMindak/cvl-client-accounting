@@ -1,0 +1,22 @@
+.header-menue {
+  display: flex;
+  justify-content: space-between;
+}
+
+.header-menue a {
+  margin: auto 5%;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  transition: all 0.1s ease;
+}
+
+.header-menue a .icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.header-menue a .icon:active {
+  transform: scale(1.1);
+}

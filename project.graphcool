@@ -1,0 +1,47 @@
+# project: cj6ypokvu0rve0190unqjctnr
+# version: 2
+
+type Link implements Node {
+  url: String!
+  description: String!
+  createdAt: DateTime!
+  id: ID! @isUnique
+  updatedAt: DateTime!
+}
+
+type Booking implements Node {
+  createdAt: DateTime!
+  date: DateTime!
+  id: ID! @isUnique
+  shop: Shop @relation(name: "BookingOnShop")
+  title: String!
+  type: String!
+  updatedAt: DateTime!
+  value: Float!
+}
+
+type File implements Node {
+  contentType: String!
+  createdAt: DateTime!
+  id: ID! @isUnique
+  name: String!
+  secret: String! @isUnique
+  size: Int!
+  updatedAt: DateTime!
+  url: String! @isUnique
+}
+
+type Shop implements Node {
+  adress: String
+  bookings: [Booking!]! @relation(name: "BookingOnShop")
+  createdAt: DateTime!
+  id: ID! @isUnique
+  name: String!
+  updatedAt: DateTime!
+}
+
+type User implements Node {
+  createdAt: DateTime!
+  id: ID! @isUnique
+  updatedAt: DateTime!
+}

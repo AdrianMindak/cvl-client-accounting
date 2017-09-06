@@ -1,0 +1,42 @@
+* {
+  --blue: #3293E2;
+  --blue-rgba: rgb(50, 147, 226);
+  --light-blue: #4DB1E2;
+  --grey: rgb(150,150,150);
+  --light-grey: rgb(230,230,230);
+}
+
+.accounting-app-export {
+  width: 95%;
+  margin: 10px auto;
+  height: 50px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.accounting-app-export a {
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.accounting-app-export a button {
+  width: 100%;
+  height: 100%;
+  border: 2px solid var(--blue);
+  background-color: var(--blue);
+  color: white;
+  font-size: 20px;
+  font-weight: 600;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

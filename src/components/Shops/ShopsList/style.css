@@ -1,0 +1,27 @@
+.shop-list {
+  padding: 10px;
+  border-radius: 10px;
+  background-color: rgb(230,230,230);
+}
+
+.shop-list div {
+  margin: 10px 0;
+  width: 100%;
+}
+
+/*
+.shop-list input {
+  border: 0;
+  background-color: none;
+  height: 100%;
+  font-size: 40px;
+}
+*/
+
+.shop-list button {
+  border: 0;
+  background-color: none;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+}

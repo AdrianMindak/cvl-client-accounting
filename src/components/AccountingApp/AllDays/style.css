@@ -1,0 +1,95 @@
+* {
+  --height: 200px;
+  --red: #E22545;
+
+  --x: 150;
+  --grey: rgb(var(--x),var(--x),var(--x));
+}
+
+.accounting-app-all-days-table {
+  width: 95%;
+  margin: 5% auto;
+  height: auto;
+  max-height: 500px;
+  border-radius: 10px;
+  background-color: rgb(240,240,240);
+  overflow: hidden;
+}
+
+.accounting-app-all-days-table-header {
+  display: flex;
+  flex-direction: column;
+
+  background-color: var(--grey);
+  color: white;
+  height: auto;
+}
+
+.accounting-app-all-days-table-title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 20px;
+  height: 30px;
+}
+
+.accounting-app-all-days-table-header-row {
+  display: grid;
+  grid-template-columns: repeat(2, 4.5fr) 2fr 1fr;
+  justify-content: center;
+  align-items: center;
+
+  height: 25px;
+
+  margin: 10px;
+  margin-top: 0;
+}
+
+.accounting-app-all-days-table-header-row > * {
+  font-size: 15px;
+
+  display: flex;
+  justify-content: center;
+  align-self: center;
+}
+
+.accounting-app-all-days-table-rows {
+  width: 100%;
+  height: auto;
+  max-height: 435px;
+  overflow: scroll;
+}
+
+.accounting-app-all-days-table-row {
+  padding: 5px 0;
+  color: var(--grey);
+
+  display: grid;
+  grid-template-columns: repeat(2, 4.5fr) 2fr 1fr;
+  justify-content: center;
+  align-items: center;
+
+  margin: 10px;
+}
+
+.accounting-app-all-days-table-row > * {
+  font-size: 15px;
+
+  display: flex;
+  justify-content: center;
+  align-self: center;
+}
+
+.accounting-app-all-days-table-row-date {
+  justify-content: flex-start;
+}
+
+.accounting-app-all-days-table-row-value {
+  justify-content: flex-end;
+}
+
+.accounting-app-all-days-table-row-validation {
+  display: flex;
+  justify-content:center;
+  align-items: center;
+}
