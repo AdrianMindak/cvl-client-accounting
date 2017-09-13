@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { gql, graphql } from 'react-apollo'
 import './style.css';
 import { CircledArrow } from '../../icons'
-import deleteFromArray from '../../../utillities'
-import moment from 'moment'
+// import deleteFromArray from '../../../utillities'
+// import moment from 'moment'
 
 const initialState = {
   addBookingComponentIsOpen: false,
@@ -14,32 +14,20 @@ const initialState = {
       valid: true,
       activeField: ""
     },
-    title: {
-      value: '',
-      valid: true,
-      activeField: "",
-      types: [
-        { title: "7%", type: "IN" },
-        { title: "19%", type: "IN" },
-        { title: "cards", type: "IN" },
-        { title: "payout", type: "OUT" },
-        { title: "payout-wage", type: "OUT" },
-        { title: "payout-privat", type: "OUT" },
-        { title: "withdrawal", type: "OUT" }
-      ]
-    },
+    values: [
+        { title: "7%", placeholder: '656.65', value: '', valid: true, type: "IN", credit: '', debit: '' },
+        { title: "19%", placeholder: '157.71', value: '', valid: true, type: "IN", credit: '', debit: ''},
+        { title: "cards", placeholder: '88.98', value: '', valid: true, type: "OUT", credit: '', debit: '' },
+        { title: "payout", placeholder: '7.44', value: '', valid: true, type: "OUT", credit: '', debit: '' },
+        { title: "payout-wage", placeholder: '150.00', value: '', valid: true, type: "OUT", credit: '', debit: '' },
+        { title: "payout-privat", placeholder: '50.00', value: '', valid: true, type: "OUT", credit: '', debit: '' },
+        { title: "withdrawal", placeholder: '700.00', value: '', valid: true, type: "OUT", credit: '', debit: '' },
+        { title: "difference", placeholder: '3.42', value: '', valid: true, type: "IN", credit: '', debit: '' }
+    ],
     date: {
       value: '',
       valid: true
     },
-    value: {
-      value: '',
-      valid: true
-    },
-    type: {
-      value: '',
-      valid: true
-    }
   },
   error: {
     isError: false,
@@ -48,7 +36,7 @@ const initialState = {
   }
 };
 
-class AddBookings extends Component {
+class AddDays extends Component {
   constructor(props) {
     super(props)
     this.state = Object.assign({}, initialState)
@@ -72,33 +60,30 @@ class AddBookings extends Component {
     this.setState({ firstInput: false })
   }
 
-  _setField = async (section, buttonIndex, value) => {
-    const { inputs, firstInput } = this.state
-    if (buttonIndex !== null) {
-      this._activateField(section, buttonIndex, inputs);
+  _setField = async (section, index, value) => {
+    const { inputs } = this.state
+    if (section === 'shop') {
+      inputs.shop.value = value
+      inputs.shop.activeField = index
+    } else if (section === 'date') {
+      inputs.date.value = value
+    } else {
+      if (section === 'difference' && parseFloat(value) < 0) {
+        inputs.values[index].type = 'OUT'
+        inputs.values[index].value = value * -1
+      } else {
+        inputs.values[index].value = value
+      }
     }
-    value = value.trim()
-    inputs[section].value = value
-    if (section === "title") {
-      inputs.title.types.forEach( type => {
-        if (type.title === value) {
-          inputs.type.value = type.type
-        }
-      })
-    }
-    if (inputs[section].valid === false) {
-      inputs[section].valid = true
-    }
-    await this.setState({ inputs })
-    if (!firstInput) {
-      this._checkFields()
-    }
+    this.setState({ inputs })
   }
 
+/*
   _activateField = (section, index, inputs = this.state.inputs) => {
     inputs[section].activeField = index
     this.setState({ inputs })
   }
+*/
 
   _setClassAtributes = (section, index) => { // activate Field and set the styling for inValid
     const field = this.state.inputs[section]
@@ -106,6 +91,7 @@ class AddBookings extends Component {
     return classes.trim()
   }
 
+/*
   _checkFields = (showMissingFields = !this.state.firstInput, ) => {
     const { inputs } = this.state
     var allFilled = 0;
@@ -198,31 +184,43 @@ class AddBookings extends Component {
     }
     this.setState({ error })
   }
-
+*/
   _addBooking = async () => {
     const { inputs } = this.state
 
-    await this._doingFirstInput()
-
-    if( await this._checkFields()) {
-      const value = parseFloat(inputs.value.value)
+    var NEW_UPLOAD = inputs.values.map( input => {
+      console.log(input);
       const date = new Date(inputs.date.value)
+      const title = input.title
+      const value = parseFloat(input.value)
+      const type = input.type
+      const shopID = inputs.shop.value
+      return {
+        date,
+        title,
+        value,
+        type,
+        shopID
+      }
+    })
+    console.log(NEW_UPLOAD);
 
-      inputs.value.value = value.toString()
-      inputs.date.value = moment(date).format('dd mmm yyyy')
-      this.setState({ inputs })
+    await NEW_UPLOAD.forEach( variables => {
+      this.props.createBookingMutation({ variables })
+        .catch( err => {
+          const { error } = this.state
+          error.isError = true
+          const message = `Error: The data couldn't be storred.`
+          if (error.message.indexOf(message) === -1) {
+            error.message.push(message)
+          }
+          console.error(err);
+          console.dir(err);
+          this.setState({ error })
+        })
+    })
 
-      await this.props.createBookingMutation({
-        variables: {
-          date: date,
-          title: inputs.title.value,
-          value: value,
-          type: inputs.type.value,
-          shopID: inputs.shop.value
-        }
-      })
-      this._clearState()
-    }
+    this._clearState()
   }
 
   render() {
@@ -240,7 +238,7 @@ class AddBookings extends Component {
                 width="30px"
                 color="white"/>
             </div>
-            <div> Add Bookings </div>
+            <div> Add Days </div>
           </div>
           <div className={ this.state.addBookingComponentIsOpen ? "open" : "closed" }>
             <div className="accounting-app-add-bookings-add-single-booking">
@@ -257,19 +255,6 @@ class AddBookings extends Component {
                   })
                 }
               </div>
-              <div className="accounting-app-add-bookings-add-single-booking-select-title">
-                {
-                  this.state.inputs.title.types.map( (obj, index) => {
-                    return (
-                      <button
-                        key={ index }
-                        className={ this._setClassAtributes("title", index) }
-                        value={ obj.title }
-                        onClick={ e => this._setField("title", index, obj.title) }> { obj.title } </button>
-                    )
-                  })
-                }
-              </div>
               <div className="accounting-app-add-bookings-add-single-booking-input">
                 <label>Date</label>
                 <input
@@ -280,21 +265,27 @@ class AddBookings extends Component {
                   onChange={ e => this._setField("date", null ,e.target.value) }
                 />
               </div>
-              <div className="accounting-app-add-bookings-add-single-booking-input">
-                <label>Value</label>
-                <input
-                  type="text"
-                  className={ this.state.inputs.value.valid ? '' : "isInValid" }
-                  value={ this.state.inputs.value.value }
-                  placeholder={ `120.01` }
-                  onChange={ e => this._setField("value", null ,e.target.value) }
-                />
-              </div>
+              {
+                this.state.inputs.values.map( (input, index) => {
+                  return (
+                    <div key={ index } className="accounting-app-add-bookings-add-single-booking-input">
+                      <label>{ input.title }</label>
+                      <input
+                        type="text"
+                        className={ input.valid ? '' : "isInValid" }
+                        value={ input.value }
+                        placeholder={ input.placeholder }
+                        onChange={ e => this._setField(input.title, index, e.target.value) }
+                      />
+                    </div>
+                  )
+                })
+              }
             </div>
             <button
               className="accounting-app-add-bookings-add-single-booking-submit-button"
               onClick={ e => this._addBooking()}
-              > Add Booking </button>
+              > Add Day </button>
         </div>
       </div>
     </div>
@@ -318,4 +309,4 @@ const CREATE_BOOKING_MUTATION = gql`
   }
 `
 
-export default graphql(CREATE_BOOKING_MUTATION, { name: 'createBookingMutation' })(AddBookings)
+export default graphql(CREATE_BOOKING_MUTATION, { name: 'createBookingMutation' })(AddDays)

@@ -1,0 +1,215 @@
+* {
+  --blue: #3293E2;
+  --blue-rgba: rgb(50, 147, 226);
+  --light-blue: rgb(77,177,226);
+  --grey: rgb(150,150,150);
+  --light-grey: rgb(230,230,230);
+}
+
+.accounting-app-add-bookings {
+  width: 95%;
+  margin: 5% auto;
+  height: auto;
+  overflow: hidden;
+
+  background-color: var(--blue);
+  border-radius: 10px;
+
+  border: 2px solid var(--blue);
+  padding: 5px;
+}
+
+.accounting-app-add-bookings-error {
+  width: auto;
+  height: auto;
+
+  color: white;
+  background-color: var(--red);
+
+  border-radius: 10px;
+
+  display: flex;
+  flex-direction: column;
+
+  margin-bottom: 10px;
+  padding: 10px;
+}
+
+.accounting-app-add-bookings-error-message {
+  font-size: 18px;
+  font-weight: 600;
+  text-align: center;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.accounting-app-add-bookings-body {
+}
+
+.accounting-app-add-bookings-header {
+  height: 60px;
+  width: 100%;
+  background-color: var(--blue);
+  color: white;
+  font-size: 20px;
+  font-weight: 600;
+
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.accounting-app-add-bookings-header svg {
+  position: relative;
+  top: 0;
+  left: 0;
+  margin-right: 70px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.closed {
+  display: none;
+}
+
+.accounting-app-add-bookings-add-single-booking {
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.isInValid {
+  border: 2px solid var(--red) !important;
+  background-color: var(--light-grey) !important;
+  color: var(--red) !important;
+}
+
+.accounting-app-add-bookings-add-single-booking-select-shop {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.accounting-app-add-bookings-add-single-booking-select-shop button {
+  margin-right: 5px;
+  font-size: 18px;
+  color: white;
+  font-weight: 400;
+  border: 2px solid white;
+  background-color: var(--blue);
+}
+
+.accounting-app-add-bookings-add-single-booking-select-shop button.on{
+  color: var(--blue);
+  background-color: white;
+}
+
+.accounting-app-add-bookings-add-single-booking-select-shop button:hover {
+  margin-right: 5px;
+  color: var(--blue);
+  border: 2px solid white;
+  background-color: white;
+  transform: scale(1);
+  box-shadow: none;
+}
+
+.accounting-app-add-bookings-add-single-booking-select-title {
+  margin: 10px 0;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-wrap: wrap;
+
+  border-top: 2px solid white;
+  border-bottom: 2px solid white;
+  padding: 10px 0
+}
+
+.accounting-app-add-bookings-add-single-booking-select-title button{
+  width: auto;
+  height: auto;
+  margin: 2px 5px;
+  font-size: 18px;
+  color: white;
+  font-weight: 400;
+  border: 2px solid white;
+  background-color: var(--blue);
+}
+
+.accounting-app-add-bookings-add-single-booking-select-title button.on{
+  color: var(--blue);
+  background-color: white;
+}
+
+.accounting-app-add-bookings-add-single-booking-select-title button:hover {
+  margin-right: 5px;
+  color: var(--blue);
+  border: 2px solid white;
+  background-color: white;
+  transform: scale(1);
+  box-shadow: none;
+}
+
+.accounting-app-add-bookings-add-single-booking-input {
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.accounting-app-add-bookings-add-single-booking-input label {
+  margin: 5px 10px;
+  font-size: 18px;
+}
+
+.accounting-app-add-bookings-add-single-booking-input input[type="text"] {
+  width: auto;
+  height: auto;
+  min-height: 15px;
+  padding: 10px;
+  border: none;
+  border-radius: 10px;
+  margin: 5px 0;
+  background-color: var(--light-grey);
+
+  color: var(--blue);
+  font-size: 18px;
+}
+
+.accounting-app-add-bookings-add-single-booking-input input[type="text"]:hover {
+  background-color: white;
+  color: var(--blue);
+}
+
+.accounting-app-add-bookings-add-single-booking-input input[type="text"]:focus {
+  background-color: white;
+  color: var(--blue);
+  box-shadow: inset 0 0 15px 0 rgba(var(--bluergb), 0.5);
+}
+
+.accounting-app-add-bookings-add-single-booking-submit-button {
+  margin: 5px auto;
+  width: 100%;
+  height: auto;
+  min-height: 30px;
+  padding: 10px;
+  font-size: 18px;
+  background-color: var(--blue);
+  border: 2px solid white;
+  border-radius: 0;
+  color: white;
+  border-radius: 10px;
+}
+
+.accounting-app-add-bookings-add-single-booking-submit-button:hover {
+  background-color: white;
+  color: var(--blue);
+  box-shadow: none;
+  transform: scale(1);
+  border-bottom: 2px solid white;
+}

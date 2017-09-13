@@ -3,10 +3,12 @@ import { gql, graphql, compose } from 'react-apollo'
 import './style.css';
 import Shops from './Shops/'
 import AddBookings from './AddBookings'
+import AddDays from './AddDays'
 // import AllDays from './AllDays'
 import AllBookings from './AllBookings'
 import { CSVLink } from 'react-csv'
 import moment from 'moment'
+import numeral from 'numeral'
 
 class AccountingApp extends Component {
   constructor(props) {
@@ -26,15 +28,34 @@ class AccountingApp extends Component {
 
       var bookingsToRender = this.props.allBookingsQuery.allBookings || [];
       var shopsToRender = this.props.allShopsQuery.allShops || [];
-      var csvToExport = [
-        [],
-      ];
-      var today = moment().format('MMMM Do YYYY');
+      var csvToExport = [];
+      var today = moment().format('YYYY MMMM Do');
       var csvFileName = `${ today }.csv`
+      const csvHeader = ["date", "title", "value", "type"]
+
+      csvToExport.push(csvHeader)
+      bookingsToRender.forEach( booking => {
+        let bookingArray = [];
+        csvHeader.forEach( el => {
+          switch (el) {
+            case 'date':
+              bookingArray.push(moment(booking[el]).format('DD-MM-YYYY'))
+              break
+            case 'value':
+              bookingArray.push(numeral(booking[el]).format('0,0.00'))
+              break
+            default:
+              bookingArray.push(booking[el])
+              break
+          }
+        })
+        csvToExport.push(bookingArray)
+      })
       return (
         <div>
           <Shops shops={ shopsToRender } />
           <AddBookings shops={ shopsToRender }/>
+          <AddDays shops={ shopsToRender }/>
           <AllBookings data={ bookingsToRender }/>
           <div className="accounting-app-export">
             <CSVLink
